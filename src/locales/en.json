@@ -1,0 +1,255 @@
+{
+  "common": {
+    "siteName": "Owl I Health and Wellness Center",
+    "bookNow": "Book Now",
+    "bookAppointment": "Book Appointment",
+    "exploreServices": "Explore Services",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "readMore": "Read More",
+    "download": "Download",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "success": "Success",
+    "callNow": "Call Now",
+    "chatWithUs": "Chat with us",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "portal": "Portal",
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "doctors": "Doctors",
+    "resources": "Resources",
+    "blog": "Blog",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "workingHours": "Working Hours",
+    "whatsapp": "WhatsApp",
+    "followUs": "Follow Us",
+    "quickLinks": "Quick Links",
+    "copyright": "2026 Owl I Health and Wellness Center. All rights reserved.",
+    "skipToMain": "Skip to main content",
+    "name": "Name",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "registerHere": "Register here",
+    "loginHere": "Login here"
+  },
+  "hero": {
+    "heading": "Heal Naturally. Live Fully.",
+    "subheading": "Experience the power of naturopathy at Tirunelveli's trusted health and wellness center. Drug-free, holistic healing for your body, mind, and soul."
+  },
+  "aboutPreview": {
+    "heading": "Natural Healing, Modern Approach",
+    "description": "At Owl I Health and Wellness Center, we believe in the body's innate ability to heal itself. Our naturopathy treatments combine ancient wisdom with modern techniques to provide drug-free, holistic care that addresses the root cause of ailments, not just symptoms.",
+    "link": "Learn More About Us"
+  },
+  "servicesOverview": {
+    "heading": "Our Healing Services",
+    "subheading": "Comprehensive naturopathy treatments tailored to your unique health needs",
+    "viewAll": "View All Services"
+  },
+  "whyChooseUs": {
+    "heading": "Why Choose Us",
+    "items": {
+      "experienced": {
+        "title": "Experienced BNYS Doctors",
+        "description": "Our team of qualified naturopathy physicians bring years of expertise in natural healing."
+      },
+      "natural": {
+        "title": "100% Natural Treatments",
+        "description": "Drug-free therapies that work with your body's natural healing mechanisms."
+      },
+      "personalized": {
+        "title": "Personalized Care Plans",
+        "description": "Every treatment plan is customized to your individual health needs and goals."
+      },
+      "affordable": {
+        "title": "Affordable Wellness",
+        "description": "Quality healthcare that is accessible and affordable for every family."
+      }
+    }
+  },
+  "testimonials": {
+    "heading": "What Our Patients Say",
+    "subheading": "Real stories from real people who found healing through naturopathy"
+  },
+  "blogPreview": {
+    "heading": "Health & Wellness Blog",
+    "subheading": "Expert insights on natural healing, nutrition, and holistic wellness",
+    "viewAll": "Visit Blog"
+  },
+  "cta": {
+    "heading": "Ready to Start Your Natural Healing Journey?",
+    "subheading": "Take the first step towards a healthier, drug-free life. Book your consultation today.",
+    "bookButton": "Book Appointment",
+    "callButton": "Call Now"
+  },
+  "about": {
+    "pageTitle": "About Us",
+    "story": {
+      "heading": "Our Story",
+      "content": "Founded in 2026, Owl I Health and Wellness Center was born from a vision to bring authentic naturopathy healthcare to the people of Tirunelveli. We believe that true healing comes from within, and our mission is to guide every patient on their journey to natural wellness."
+    },
+    "vision": {
+      "heading": "Our Vision",
+      "content": "To be the leading naturopathy center in Tamil Nadu, making natural, drug-free healthcare accessible to all."
+    },
+    "mission": {
+      "heading": "Our Mission",
+      "content": "To provide comprehensive naturopathy treatments that address the root cause of ailments, empower patients with knowledge about natural healing, and create a community of wellness."
+    },
+    "values": {
+      "heading": "Our Values",
+      "holistic": "Holistic Approach",
+      "holisticDesc": "We treat the whole person — body, mind, and spirit.",
+      "compassion": "Compassion",
+      "compassionDesc": "Every patient receives empathetic, personalized care.",
+      "excellence": "Excellence",
+      "excellenceDesc": "We maintain the highest standards in naturopathy practice.",
+      "education": "Education",
+      "educationDesc": "We empower patients with knowledge for lifelong wellness."
+    }
+  },
+  "services": {
+    "pageTitle": "Our Services",
+    "pageDescription": "Comprehensive naturopathy treatments for holistic healing",
+    "bookThis": "Book This Service",
+    "duration": "Duration",
+    "price": "Price",
+    "from": "From"
+  },
+  "doctors": {
+    "pageTitle": "Our Doctors",
+    "pageDescription": "Meet our team of experienced naturopathy physicians",
+    "experience": "Experience",
+    "qualification": "Qualification",
+    "specialization": "Specialization"
+  },
+  "resources": {
+    "pageTitle": "Resource Library",
+    "pageDescription": "Free downloadable guides for your wellness journey",
+    "downloads": "downloads",
+    "filterAll": "All",
+    "filterDiet": "Diet",
+    "filterYoga": "Yoga",
+    "filterExercise": "Exercise",
+    "filterLifestyle": "Lifestyle"
+  },
+  "blog": {
+    "pageTitle": "Health & Wellness Blog",
+    "pageDescription": "Expert insights on natural healing and holistic wellness",
+    "publishedOn": "Published on",
+    "readTime": "min read",
+    "categories": {
+      "all": "All",
+      "treatments": "Treatments",
+      "wellness": "Wellness Tips",
+      "nutrition": "Nutrition",
+      "yoga": "Yoga"
+    }
+  },
+  "booking": {
+    "pageTitle": "Book an Appointment",
+    "step1": "Select Service",
+    "step2": "Choose Date & Time",
+    "step3": "Your Details",
+    "step4": "Confirmation",
+    "selectService": "Choose a service",
+    "selectDate": "Select a date",
+    "selectTime": "Select a time slot",
+    "yourName": "Your Name",
+    "yourEmail": "Your Email",
+    "yourPhone": "Your Phone",
+    "message": "Message (optional)",
+    "confirmBooking": "Confirm Booking",
+    "bookingSuccess": "Your appointment request has been submitted successfully! We will contact you shortly to confirm.",
+    "morning": "Morning (9AM - 12PM)",
+    "afternoon": "Afternoon (12PM - 3PM)",
+    "evening1": "Evening (3PM - 6PM)",
+    "evening2": "Night (6PM - 9PM)"
+  },
+  "contact": {
+    "pageTitle": "Contact Us",
+    "pageDescription": "We'd love to hear from you. Reach out to us anytime.",
+    "formTitle": "Send us a Message",
+    "yourName": "Your Name",
+    "yourEmail": "Your Email",
+    "yourPhone": "Your Phone",
+    "yourMessage": "Your Message",
+    "sendMessage": "Send Message",
+    "messageSent": "Thank you! Your message has been sent successfully.",
+    "getInTouch": "Get in Touch",
+    "findUs": "Find Us"
+  },
+  "gallery": {
+    "pageTitle": "Gallery",
+    "pageDescription": "A glimpse into our healing space and treatments",
+    "categories": {
+      "all": "All",
+      "clinic": "Clinic",
+      "therapy": "Therapy Rooms",
+      "treatments": "Treatments",
+      "events": "Events"
+    }
+  },
+  "auth": {
+    "loginTitle": "Welcome Back",
+    "loginSubtitle": "Sign in to your account",
+    "registerTitle": "Create Account",
+    "registerSubtitle": "Join us on your wellness journey",
+    "forgotTitle": "Reset Password",
+    "forgotSubtitle": "Enter your email to receive a reset link",
+    "resetSent": "If an account exists with that email, you will receive a password reset link.",
+    "emailLabel": "Email Address",
+    "passwordLabel": "Password",
+    "nameLabel": "Full Name",
+    "phoneLabel": "Phone Number",
+    "confirmPasswordLabel": "Confirm Password",
+    "loginButton": "Sign In",
+    "registerButton": "Create Account",
+    "resetButton": "Send Reset Link",
+    "invalidCredentials": "Invalid email or password",
+    "passwordMismatch": "Passwords do not match",
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required",
+    "nameRequired": "Name is required",
+    "phoneRequired": "Phone number is required",
+    "registrationSuccess": "Account created successfully! Please sign in."
+  },
+  "portal": {
+    "dashboard": "Dashboard",
+    "welcome": "Welcome back",
+    "appointments": "My Appointments",
+    "pdfs": "My Documents",
+    "payments": "Payment History",
+    "invoices": "My Invoices",
+    "profile": "My Profile",
+    "upcomingAppointments": "Upcoming Appointments",
+    "recentInvoices": "Recent Invoices",
+    "noAppointments": "No upcoming appointments",
+    "noInvoices": "No invoices yet",
+    "bookNew": "Book New Appointment",
+    "viewAll": "View All",
+    "myCharts": "My Charts",
+    "resourceLibrary": "Resource Library"
+  },
+  "footer": {
+    "aboutText": "Owl I Health and Wellness Center is a naturopathy clinic dedicated to holistic healing through natural therapies in Tirunelveli, Tamil Nadu.",
+    "servicesTitle": "Our Services",
+    "contactTitle": "Contact Info"
+  }
+}

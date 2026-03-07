@@ -1,0 +1,202 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  DOCTOR
+  PATIENT
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+  REFUNDED
+}
+
+enum AppointmentStatus {
+  REQUESTED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phone        String   @unique
+  passwordHash String
+  role         Role     @default(PATIENT)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  patientProfile PatientProfile?
+  doctorProfile  DoctorProfile?
+}
+
+model PatientProfile {
+  id           String  @id @default(cuid())
+  userId       String  @unique
+  user         User    @relation(fields: [userId], references: [id])
+  age          Int?
+  gender       String?
+  address      String?
+  medicalNotes String?
+
+  appointments Appointment[]
+  payments     Payment[]
+  invoices     Invoice[]
+  patientPdfs  PatientPdf[]
+}
+
+model DoctorProfile {
+  id             String @id @default(cuid())
+  userId         String @unique
+  user           User   @relation(fields: [userId], references: [id])
+  qualification  String
+  specialization String
+  experience     String
+  bio            String?
+  photoUrl       String?
+
+  appointments Appointment[]
+}
+
+model Service {
+  id               String  @id @default(cuid())
+  name             String
+  nameTamil        String
+  slug             String  @unique
+  description      String
+  descriptionTamil String
+  icon             String
+  category         String
+  duration         String
+  price            Float?
+  isActive         Boolean @default(true)
+
+  appointments Appointment[]
+  invoiceItems InvoiceItem[]
+}
+
+model Appointment {
+  id        String            @id @default(cuid())
+  patientId String
+  patient   PatientProfile    @relation(fields: [patientId], references: [id])
+  doctorId  String?
+  doctor    DoctorProfile?    @relation(fields: [doctorId], references: [id])
+  serviceId String
+  service   Service           @relation(fields: [serviceId], references: [id])
+  date      DateTime
+  timeSlot  String
+  status    AppointmentStatus @default(REQUESTED)
+  notes     String?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model Payment {
+  id               String        @id @default(cuid())
+  patientId        String
+  patient          PatientProfile @relation(fields: [patientId], references: [id])
+  amount           Float
+  upiTransactionId String?
+  status           PaymentStatus @default(PENDING)
+  method           String        @default("UPI")
+  notes            String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  invoice Invoice?
+}
+
+model Invoice {
+  id            String         @id @default(cuid())
+  invoiceNumber String         @unique
+  patientId     String
+  patient       PatientProfile @relation(fields: [patientId], references: [id])
+  paymentId     String?        @unique
+  payment       Payment?       @relation(fields: [paymentId], references: [id])
+  subtotal      Float
+  tax           Float          @default(0)
+  total         Float
+  notes         String?
+  isManual      Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+
+  items InvoiceItem[]
+}
+
+model InvoiceItem {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id])
+  serviceId   String?
+  service     Service? @relation(fields: [serviceId], references: [id])
+  description String
+  quantity    Int      @default(1)
+  unitPrice   Float
+  total       Float
+}
+
+model PublicPdf {
+  id          String   @id @default(cuid())
+  title       String
+  titleTamil  String
+  category    String
+  description String?
+  fileName    String
+  filePath    String
+  fileSize    Int
+  downloads   Int      @default(0)
+  isActive    Boolean  @default(true)
+  uploadedAt  DateTime @default(now())
+}
+
+model PatientPdf {
+  id         String         @id @default(cuid())
+  patientId  String
+  patient    PatientProfile @relation(fields: [patientId], references: [id])
+  title      String
+  category   String
+  fileName   String
+  filePath   String
+  fileSize   Int
+  notes      String?
+  uploadedBy String
+  uploadedAt DateTime       @default(now())
+}
+
+model BlogPost {
+  id           String   @id @default(cuid())
+  title        String
+  titleTamil   String
+  slug         String   @unique
+  excerpt      String
+  excerptTamil String
+  content      String
+  contentTamil String
+  category     String
+  coverImage   String?
+  isPublished  Boolean  @default(true)
+  publishedAt  DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Testimonial {
+  id           String   @id @default(cuid())
+  patientName  String
+  treatment    String
+  content      String
+  contentTamil String?
+  rating       Int      @default(5)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}

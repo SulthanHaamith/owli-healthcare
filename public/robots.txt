@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/*
+Disallow: /portal/*
+Disallow: /doctor/*
+Disallow: /api/*
+
+Sitemap: https://owlihealthcare.com/sitemap.xml
