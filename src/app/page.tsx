@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   Droplets,
@@ -14,9 +15,32 @@ import {
   Stethoscope,
   Heart,
   IndianRupee,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { CLINIC } from "@/lib/constants";
+
+interface Testimonial {
+  id: string;
+  patientName: string;
+  treatment: string;
+  content: string;
+  contentTamil: string | null;
+  rating: number;
+}
+
+interface BlogPost {
+  id: string;
+  title: string;
+  titleTamil: string;
+  slug: string;
+  excerpt: string;
+  excerptTamil: string;
+  category: string;
+  coverImage: string | null;
+  publishedAt: string;
+}
 
 const serviceIcons = [
   { icon: Droplets, nameKey: "Hydrotherapy", descKey: "Hip bath, Spinal bath, Steam bath, Enema therapy" },
@@ -35,7 +59,41 @@ const whyChooseItems = [
 ];
 
 export default function HomePage() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    fetch("/api/testimonials")
+      .then((res) => res.json())
+      .then((data) => { if (Array.isArray(data)) setTestimonials(data); })
+      .catch(() => {});
+
+    fetch("/api/blog")
+      .then((res) => res.json())
+      .then((data) => { if (Array.isArray(data)) setBlogPosts(data.slice(0, 3)); })
+      .catch(() => {});
+  }, []);
+
+  // Auto-rotate testimonials
+  useEffect(() => {
+    if (testimonials.length <= 1) return;
+    const timer = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
+
+  const prevTestimonial = useCallback(() => {
+    setActiveTestimonial((prev) =>
+      prev === 0 ? testimonials.length - 1 : prev - 1
+    );
+  }, [testimonials.length]);
+
+  const nextTestimonial = useCallback(() => {
+    setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+  }, [testimonials.length]);
 
   return (
     <>
@@ -155,7 +213,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials Placeholder */}
+      {/* Testimonials Carousel */}
       <section className="section-padding bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -166,28 +224,85 @@ export default function HomePage() {
               {t("testimonials.subheading")}
             </p>
           </div>
-          {/* Testimonials carousel will be populated from database in Phase 2 */}
-          <div className="bg-cream rounded-2xl p-8 text-center">
-            <div className="flex justify-center gap-1 mb-4">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="h-5 w-5 text-warning fill-warning"
-                  aria-hidden="true"
-                />
-              ))}
+
+          {testimonials.length > 0 ? (
+            <div className="relative max-w-3xl mx-auto">
+              <div className="bg-cream rounded-2xl p-8 text-center">
+                <div className="flex justify-center gap-1 mb-4">
+                  {[...Array(testimonials[activeTestimonial].rating)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="h-5 w-5 text-warning fill-warning"
+                      aria-hidden="true"
+                    />
+                  ))}
+                </div>
+                <blockquote className="text-lg text-dark-text italic mb-4 max-w-2xl mx-auto">
+                  &ldquo;
+                  {locale === "ta" && testimonials[activeTestimonial].contentTamil
+                    ? testimonials[activeTestimonial].contentTamil
+                    : testimonials[activeTestimonial].content}
+                  &rdquo;
+                </blockquote>
+                <p className="font-semibold text-primary">
+                  {testimonials[activeTestimonial].patientName}
+                </p>
+                <p className="text-sm text-light-text">
+                  {testimonials[activeTestimonial].treatment}
+                </p>
+              </div>
+
+              {/* Controls */}
+              {testimonials.length > 1 && (
+                <>
+                  <button
+                    onClick={prevTestimonial}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-gray-50"
+                    aria-label="Previous testimonial"
+                  >
+                    <ChevronLeft className="h-5 w-5 text-dark-text" />
+                  </button>
+                  <button
+                    onClick={nextTestimonial}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:bg-gray-50"
+                    aria-label="Next testimonial"
+                  >
+                    <ChevronRight className="h-5 w-5 text-dark-text" />
+                  </button>
+                  {/* Dots */}
+                  <div className="flex justify-center gap-2 mt-4">
+                    {testimonials.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveTestimonial(i)}
+                        className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                          i === activeTestimonial ? "bg-primary" : "bg-gray-300"
+                        }`}
+                        aria-label={`Go to testimonial ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
-            <blockquote className="text-lg text-dark-text italic mb-4 max-w-2xl mx-auto">
-              &ldquo;The naturopathy treatments at Owl I have transformed my health. After years of chronic back pain, I finally found lasting relief through their holistic approach.&rdquo;
-            </blockquote>
-            {/* [PLACEHOLDER: Replace with real patient testimonial data from database] */}
-            <p className="font-semibold text-primary">Patient Name</p>
-            <p className="text-sm text-light-text">Back Pain Treatment</p>
-          </div>
+          ) : (
+            <div className="bg-cream rounded-2xl p-8 text-center">
+              <div className="flex justify-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 text-warning fill-warning" aria-hidden="true" />
+                ))}
+              </div>
+              <blockquote className="text-lg text-dark-text italic mb-4 max-w-2xl mx-auto">
+                &ldquo;The naturopathy treatments at Owl I have transformed my health. After years of chronic back pain, I finally found lasting relief through their holistic approach.&rdquo;
+              </blockquote>
+              <p className="font-semibold text-primary">Patient</p>
+              <p className="text-sm text-light-text">Back Pain Treatment</p>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Blog Preview Placeholder */}
+      {/* Blog Preview */}
       <section className="section-padding">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -198,31 +313,58 @@ export default function HomePage() {
               {t("blogPreview.subheading")}
             </p>
           </div>
-          {/* Blog posts will be populated from database in Phase 2 */}
+
           <div className="grid md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="bg-white rounded-xl overflow-hidden shadow-sm"
-              >
-                <div className="h-48 bg-light-green/20 flex items-center justify-center">
-                  {/* [PLACEHOLDER: Replace with blog post cover image] */}
-                  <span className="text-light-text">Blog Image {i}</span>
-                </div>
-                <div className="p-5">
-                  <span className="text-xs font-medium text-secondary uppercase">
-                    Wellness
-                  </span>
-                  <h3 className="text-lg font-semibold text-dark-text mt-1 mb-2">
-                    Blog Post Title {i}
-                  </h3>
-                  <p className="text-sm text-light-text">
-                    Brief excerpt of the blog post content goes here...
-                  </p>
-                </div>
-              </div>
-            ))}
+            {(blogPosts.length > 0 ? blogPosts : [null, null, null]).map((post, i) => {
+              if (!post) {
+                return (
+                  <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm">
+                    <div className="h-48 bg-light-green/20 flex items-center justify-center">
+                      <span className="text-light-text">Blog Image {i + 1}</span>
+                    </div>
+                    <div className="p-5">
+                      <span className="text-xs font-medium text-secondary uppercase">Wellness</span>
+                      <h3 className="text-lg font-semibold text-dark-text mt-1 mb-2">Blog Post Title {i + 1}</h3>
+                      <p className="text-sm text-light-text">Brief excerpt of the blog post content goes here...</p>
+                    </div>
+                  </div>
+                );
+              }
+
+              const title = locale === "ta" ? post.titleTamil : post.title;
+              const excerpt = locale === "ta" ? post.excerptTamil : post.excerpt;
+
+              return (
+                <Link
+                  key={post.id}
+                  href={`/blog/${post.slug}`}
+                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group"
+                >
+                  <div className="h-48 bg-light-green/20 flex items-center justify-center overflow-hidden">
+                    {post.coverImage ? (
+                      <img
+                        src={post.coverImage}
+                        alt={title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <span className="text-light-text">Blog Image</span>
+                    )}
+                  </div>
+                  <div className="p-5">
+                    <span className="text-xs font-medium text-secondary uppercase">
+                      {post.category}
+                    </span>
+                    <h3 className="text-lg font-semibold text-dark-text mt-1 mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      {title}
+                    </h3>
+                    <p className="text-sm text-light-text line-clamp-2">{excerpt}</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
+
           <div className="text-center mt-8">
             <Link
               href="/blog"
@@ -270,18 +412,12 @@ export default function HomePage() {
               <div className="space-y-3">
                 <p className="text-light-text">{CLINIC.address}</p>
                 <p>
-                  <a
-                    href={`tel:${CLINIC.phone}`}
-                    className="text-secondary hover:underline"
-                  >
+                  <a href={`tel:${CLINIC.phone}`} className="text-secondary hover:underline">
                     {CLINIC.phone}
                   </a>
                 </p>
                 <p>
-                  <a
-                    href={`mailto:${CLINIC.email}`}
-                    className="text-secondary hover:underline"
-                  >
+                  <a href={`mailto:${CLINIC.email}`} className="text-secondary hover:underline">
                     {CLINIC.email}
                   </a>
                 </p>
